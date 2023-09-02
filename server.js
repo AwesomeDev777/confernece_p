@@ -17,15 +17,19 @@ app.get("/test", (req, res) => {
 })
 
 app.use(async (req, res) => {
-  const resp = await axios({
-    url: `${ProxyURL}${req.url}`,
-    method: req.method,
-    data: req.body,
-    header: req.header
-  });
 
-  res.send(resp)
-
+  try {
+    const resp = await axios({
+      url: `${ProxyURL}${req.url}`,
+      method: req.method,
+      data: req.body,
+      header: req.header
+    });
+    res.send(resp)
+    
+  } catch (error) {
+    res.status(403).send(error)
+  }
 })
 
 // app.get("*", (req, res) => {
