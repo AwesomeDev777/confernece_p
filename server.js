@@ -28,6 +28,7 @@ app.use(async (req, res) => {
     res.send(resp)
     
   } catch (error) {
+    console.log(error)
     res.status(403).send(error)
   }
 })
