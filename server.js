@@ -1,6 +1,7 @@
 const express = require("express");
 const request = require("postman-request");
 const cors = require("cors");
+const axios = require("axios");
 
 const ProxyURL = "https://api.eventmeet.xyz";
 
@@ -11,19 +12,30 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }))
 
+app.use(async (req, res) => {
+  const resp = await axios({
+    url: `${ProxyURL}${req.url}`,
+    method: req.method,
+    data: req.body,
+    header: req.header
+  });
+
+  res.send(resp.data)
+
+})
+
 // app.get("*", (req, res) => {
 //   res.send("test")
 // })
 
-app.use((req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "*");
-    res.header("Access-Control-Allow-Headers", req.header('access-control-request-headers'));
-    request({
-      url: `${ProxyURL}${req.url}`
-    }).on("error", function(e) {
-      res.end("Error occurred while creating server")
-    }).pipe(res);
-});
+// app.use((req, res) => {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Methods", "*");
+//     request({
+//       url: `${ProxyURL}${req.url}`
+//     }).on("error", function(e) {
+//       res.end("Error occurred while creating server")
+//     }).pipe(res);
+// });
 
 app.listen(80)
