@@ -11,16 +11,19 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }))
 
-app.get("*", (req, res) => {
-  res.send("test")
-})
+// app.get("*", (req, res) => {
+//   res.send("test")
+// })
 
-// app.use((req, res) => {
-//     request({
-//       url: `${ProxyURL}${req.url}`
-//     }).on("error", function(e) {
-//       res.end("Error occurred while creating server")
-//     }).pipe(res);
-// });
+app.use((req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "*");
+    res.header("Access-Control-Allow-Headers", req.header('access-control-request-headers'));
+    request({
+      url: `${ProxyURL}${req.url}`
+    }).on("error", function(e) {
+      res.end("Error occurred while creating server")
+    }).pipe(res);
+});
 
 app.listen(80)
