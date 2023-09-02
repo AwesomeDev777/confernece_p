@@ -16,17 +16,17 @@ app.get("/test", (req, res) => {
   res.send("test proxy")
 })
 
-// app.use(async (req, res) => {
-//   const resp = await axios({
-//     url: `${ProxyURL}${req.url}`,
-//     method: req.method,
-//     data: req.body,
-//     header: req.header
-//   });
+app.use(async (req, res) => {
+  const resp = await axios({
+    url: `${ProxyURL}${req.url}`,
+    method: req.method,
+    data: req.body,
+    header: req.header
+  });
 
-//   res.send(resp.data)
+  res.send(resp.data)
 
-// })
+})
 
 // app.get("*", (req, res) => {
 //   res.send("test")
