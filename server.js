@@ -16,35 +16,35 @@ app.get("/test", (req, res) => {
   res.send("test proxy")
 })
 
-app.use(async (req, res) => {
+// app.use(async (req, res) => {
 
-  try {
-    const resp = await axios({
-      url: `${ProxyURL}${req.url}`,
-      method: req.method,
-      data: req.body,
-      header: req.header
-    });
-    res.send(resp)
+//   try {
+//     const resp = await axios({
+//       url: `${ProxyURL}${req.url}`,
+//       method: req.method,
+//       data: req.body,
+//       header: req.header
+//     });
+//     res.send(resp)
     
-  } catch (error) {
-    console.log(error)
-    res.status(403).send(error)
-  }
-})
+//   } catch (error) {
+//     console.log(error)
+//     res.status(403).send(error)
+//   }
+// })
 
 // app.get("*", (req, res) => {
 //   res.send("test")
 // })
 
-// app.use((req, res) => {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "*");
-//     request({
-//       url: `${ProxyURL}${req.url}`
-//     }).on("error", function(e) {
-//       res.end("Error occurred while creating server")
-//     }).pipe(res);
-// });
+app.use((req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "*");
+    request({
+      url: `${ProxyURL}${req.url}`
+    }).on("error", function(e) {
+      res.end("Error occurred while creating server")
+    }).pipe(res);
+});
 
 app.listen(80)
