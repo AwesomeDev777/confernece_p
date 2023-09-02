@@ -12,6 +12,10 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }))
 
+app.use("test", (req, res) => {
+  res.send("test proxy")
+})
+
 app.use(async (req, res) => {
   const resp = await axios({
     url: `${ProxyURL}${req.url}`,
