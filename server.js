@@ -11,12 +11,16 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }))
 
-app.use((req, res) => {
-    request({
-      url: `${ProxyURL}${req.url}`
-    }).on("error", function(e) {
-      res.end("Error occurred while creating server")
-    }).pipe(res);
-});
+app.get("*", (req, res) => {
+  res.send("test")
+})
+
+// app.use((req, res) => {
+//     request({
+//       url: `${ProxyURL}${req.url}`
+//     }).on("error", function(e) {
+//       res.end("Error occurred while creating server")
+//     }).pipe(res);
+// });
 
 app.listen(80)
