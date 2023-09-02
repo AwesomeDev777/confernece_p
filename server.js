@@ -24,7 +24,7 @@ app.use(async (req, res) => {
     header: req.header
   });
 
-  res.send(resp.data)
+  res.send(resp)
 
 })
 
